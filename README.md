@@ -30,14 +30,14 @@ We used [EasyCron](https://www.easycron.com/) and configured:
 #### URL to call:
 
 **random list**
-https://<cloud function service>/api?members=mario,luigi,peach&url=<URL from Slack>
+https://\<cloud function service>/api?members=mario,luigi,peach&url=\<URL-from-Slack>
 
-Live url: https://random-daily.vercel.app/api/?members=mario,luigi,peach&url=<URL from Slack>
+Live url: https://random-daily.vercel.app/api/?members=mario,luigi,peach&url=
 
 **on-call**
-https://<cloud function service>/api/on-call?members=Name01,Mane02,Mane03&url=<URL from Slack>
+https://\<cloud function service>/api/on-call?members=Name01,Mane02,Mane03&url=\<URL-from-Slack>
 
-Live url: https://random-daily.vercel.app/api/on-call?members=mario,luigi,peach&url=<URL from Slack>
+Live url: https://random-daily.vercel.app/api/on-call?members=mario,luigi,peach&url=
 
 #### When to excecute:
 `Select manually` and added the time and days of the week we wanted this to be triggered.

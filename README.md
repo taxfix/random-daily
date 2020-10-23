@@ -1,6 +1,8 @@
 # Random Daily 🌅
 > Name randomizer for standups and on-call rotation slack message publisher
 
+![random-list](random-daily.png)
+
 This code is for creating a webhook that triggers:
 * Name list randomizer and publishes it to a URL
 * Name rotation based on the week number of the year

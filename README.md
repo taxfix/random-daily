@@ -20,7 +20,7 @@ This code is for creating a webhook that triggers:
 8. Publish it (top right button) and copy the `URL` because you'll need it later on
 
 ### Creating a serverless function
-You can either use a serverless function already created by one of your teams or create a new one using a service like [Vercel][https://vercel.com/docs/serverless-functions/introduction].
+You can either use a serverless function already created by one of your teams or create a new one using a service like [Vercel](https://vercel.com/docs/serverless-functions/introduction).
 
 ### Cron Job for continuous excecution
 The idea is to use a cloud scheduler for runing this task every morning or at the time of your daily. In the case of the _on-call_ we like to run it every monday.

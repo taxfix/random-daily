@@ -25,7 +25,7 @@ You can either use a serverless function already created by one of your teams or
 ### Cron Job for continuous excecution
 The idea is to use a cloud scheduler for runing this task every morning or at the time of your daily. In the case of the _on-call_ we like to run it every monday.
 
-We used [EasyCron][https://www.easycron.com/] and configured:
+We used [EasyCron](https://www.easycron.com/) and configured:
 
 #### URL to call:
 

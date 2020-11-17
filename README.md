@@ -25,9 +25,9 @@ This code is for creating a webhook that triggers:
 You can either use a serverless function already created by one of your teams or create a new one using a service like [Vercel](https://vercel.com/docs/serverless-functions/introduction).
 
 ### Cron Job for continuous excecution
-The idea is to use a cloud scheduler for runing this task every morning or at the time of your daily. In the case of the _on-call_ we like to run it every monday.
+The idea is to use a cloud scheduler for running this task every morning or at the time of your daily. In the case of the _on-call_ we like to run it every monday.
 
-We used [EasyCron](https://www.easycron.com/) and configured:
+We're using [Google Cloud Scheduler](https://console.cloud.google.com/cloudscheduler) for this, but you could also use [EasyCron](https://www.easycron.com/)
 
 #### URL to call:
 

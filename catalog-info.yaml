@@ -3,11 +3,9 @@ kind: Component
 metadata:
   name: random-daily
   description: ""
-  annotations: []
 spec:
   type: tool
   lifecycle: production
-  domain: unknown
-  system: shared
-  owner: unknown
-relations: []
+  domain: tech-foundation
+  system: dev-tools-infra
+  owner: tie

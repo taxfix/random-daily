@@ -8,4 +8,4 @@ spec:
   lifecycle: production
   domain: tech-foundation
   system: dev-tools-infra
-  owner: tie
+  owner: architecture

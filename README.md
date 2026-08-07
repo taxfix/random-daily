@@ -1,50 +1,121 @@
-# Random Daily 🌅
-> Name randomizer for standups and on-call rotation slack message publisher
+# Random Daily
+
+A serverless application that automates team standup order randomization and on-call rotation assignments through Slack webhook integration.
 
 ![random-list](random-daily.png)
 
-This code is for creating a webhook that triggers:
-* Name list randomizer and publishes it to a URL
-* Name rotation based on the week number of the year
+## Description
 
-## Randomizer Setup
+Random Daily provides two main functions:
+- **Random List**: Shuffles team member names for daily standup ordering
+- **On-Call Rotation**: Automatically selects the on-call person based on week number rotation
 
-### Slack 
-1. On the Slack menu, select `Tools > Workflow Builder`
-2. Create a new Workflow and come up with a name
-3. Select Webhook from the list
-4. Add a variable as `text`
-  - `r_list` for the random list endpoint.
-  - `name` for the on-call endpoint.
-5. Add a new step after the Webhook `Send a message`
-6. Pick the channel where you want to send the message
-7. Add a message and insert the previously created variable and save
-8. Publish it (top right button) and copy the `URL` because you'll need it later on
+Both functions integrate with Slack workflows to automatically post results to designated channels.
 
-### Creating a serverless function
-You can either use a serverless function already created by one of your teams or create a new one using a service like [Vercel](https://vercel.com/docs/serverless-functions/introduction).
+## Setup Instructions
 
-### Cron Job for continuous excecution
-The idea is to use a cloud scheduler for running this task every morning or at the time of your daily. In the case of the _on-call_ we like to run it every monday.
+### Development Setup
 
-We're using [Google Cloud Scheduler](https://console.cloud.google.com/cloudscheduler) for this, but you could also use [EasyCron](https://www.easycron.com/)
+1. Clone the repository and install dependencies:
+```bash
+git clone <repository-url>
+cd random-daily
+npm install
+```
 
-#### URL to call:
+2. The application consists of two serverless functions in the `/api` directory:
+   - `index.js` - Handles random list generation
+   - `on-call.js` - Handles weekly on-call rotation
 
-##### random list
+### Slack Integration Setup
 
-https://\<cloud function service>/api?members=mario,luigi,peach&url=\<URL-from-Slack>
+1. In Slack, navigate to `Tools > Workflow Builder`
+2. Create a new Workflow with a descriptive name
+3. Select **Webhook** as the trigger
+4. Add a variable named `text` with one of these options:
+   - `r_list` for the random list endpoint
+   - `name` for the on-call endpoint
+5. Add a **Send a message** step after the webhook
+6. Select your target channel
+7. Insert the variable into your message template
+8. Publish the workflow and copy the webhook URL for later use
 
-Live url: https://random-daily.vercel.app/api/?members=mario,luigi,peach&url=
+### Deployment
 
-##### on-call
+Deploy the serverless functions to your preferred platform (e.g., Vercel, Netlify, AWS Lambda). The functions are ready to deploy as-is.
 
-https://\<cloud function service>/api/on-call?members=Name01,Mane02,Mane03&url=\<URL-from-Slack>
+## API Usage
 
-Live url: https://random-daily.vercel.app/api/on-call?members=mario,luigi,peach&url=
+### Random List Endpoint
 
-#### When to excecute:
-`Select manually` and added the time and days of the week we wanted this to be triggered.
+Shuffles team members and posts to Slack:
 
-#### Test
-Hit the test button after saving the cron job and check your slack channel.
+```
+GET /api?members=<member1>,<member2>,<member3>&url=<slack-webhook-url>
+```
+
+**Parameters:**
+- `members`: Comma-separated list of team member names
+- `url`: Slack webhook URL from your workflow
+
+**Example:**
+```
+https://your-domain.com/api?members=mario,luigi,peach&url=https://hooks.slack.com/workflows/...
+```
+
+### On-Call Rotation Endpoint
+
+Selects on-call person based on current week number:
+
+```
+GET /api/on-call?members=<member1>,<member2>,<member3>&url=<slack-webhook-url>
+```
+
+**Parameters:**
+- `members`: Comma-separated list of team member names
+- `url`: Slack webhook URL from your workflow
+
+**Example:**
+```
+https://your-domain.com/api/on-call?members=mario,luigi,peach&url=https://hooks.slack.com/workflows/...
+```
+
+## Automation Setup
+
+### Scheduled Execution
+
+Use a cloud scheduler to trigger the endpoints automatically:
+
+**Recommended Services:**
+- Google Cloud Scheduler
+- AWS EventBridge
+- Vercel Cron Jobs
+- EasyCron
+
+**Suggested Schedule:**
+- Random List: Daily at standup time (e.g., 9:00 AM weekdays)
+- On-Call Rotation: Weekly on Mondays
+
+### Testing
+
+After setting up your cron jobs:
+1. Use the test/manual trigger feature in your scheduler
+2. Verify the message appears in your designated Slack channel
+3. Check that the randomization or rotation logic works as expected
+
+## Running Tests
+
+Currently no automated tests are configured. To validate functionality:
+
+1. Test endpoints manually using the URLs above
+2. Verify Slack integration works correctly
+3. Confirm rotation logic by testing across different weeks
+
+## Troubleshooting
+
+### Common Issues
+
+- **"Error: no test specified"**: This is expected - no automated tests are currently configured
+- **Webhook not posting to Slack**: Verify the webhook URL is correct and the Slack workflow is published
+- **Members parameter not working**: Ensure names are comma-separated with no spaces around commas
+- **On-call rotation not cycling**: The rotation is based on ISO week numbers starting Monday
